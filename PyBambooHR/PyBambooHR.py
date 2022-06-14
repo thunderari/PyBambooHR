@@ -108,83 +108,318 @@ class PyBambooHR(object):
         # fields in get_employee and to grab all available data if no fields are passed in
         # the same function.
         self.employee_fields = {
-            "address1": ("text", "The employee's first address line"),
-            "address2": ("text", "The employee's second address line"),
-            "age": ("integer", "The employee's age. Not editable. To change update dateOfBirth, instead."),
-            "bestEmail": ("email", "The employee's work email if set, otherwise their home email"),
-            "birthday": ("text", "The employee's month and day of birth. Not editable. To change update dateOfBirth, instead."),
-            "city": ("text", "The employee's city"),
-            "country": ("country", "The employee's country"),
-            "dateOfBirth": ("date", "The date the employee was born"),
-            "department": ("list", "The employee's CURRENT department."),
-            "division": ("list", "The employee's CURRENT division"),
-            "eeo": ("list", "The employee's EEO job category. These are defined by the U.S. Equal Employment Opportunity Commission"),
-            "employeeNumber": ("text", "Employee number (assigned by your company)"),
-            "employmentStatus": ("status", "DEPRECATED. Please use 'status' instead. The employee's employee status (Active,Inactive)"),
-            "employmentHistoryStatus": ("list", "The employee's CURRENT employment status. Options are customized by account."),
-            "ethnicity": ("list", "The employee's ethnicity"),
-            "exempt": ("list", "The FLSA employee exemption code (Exempt or Non-exempt)"),
-            "firstName": ("text", "The employee's first name"),
-            "flsaCode": ("list", "The employee's FLSA code. Ie: 'Exempt', 'Non-excempt'"),
-            "fullName1": ("text", "Employee's first and last name. Example: John Doe. Ready only."),
-            "fullName2": ("text", "Employee's last and first name. Example: Doe, John. Read only."),
-            "fullName3": ("text", "Employee's full name with nickname. Example: Doe, John Quentin (JDog). Read only."),
-            "fullName4": ("text", "employee's full name without nickname. Last name first. Example: Doe, John Quentin. Read only"),
-            "fullName5": ("text", "employee's full name without nickname. First name first. Example: John Quentin Doe. Read only"),
-            "displayName": ("text", "employee's name displayed in a format configured by the user. Read only"),
-            "gender": ("gender", "The employee's gender. Legal values are 'Male', 'Female'"),
-            "hireDate": ("date", "The date the employee was hired"),
-            "homeEmail": ("email", "The employee's home email address"),
-            "homePhone": ("phone", "The employee's home phone number"),
-            "id": ("integer", "Employee id (automatically assigned by BambooHR). Not editable."),
-            "jobTitle": ("list", "The CURRENT value of the employee's job title, updating this field will create a new row in position history"),
-            "lastChanged": ("timestamp", "The date and time that the employee record was last changed"),
-            "lastName": ("text", "The employee's last name"),
-            "location": ("list", "The employee's CURRENT location"),
-            "maritalStatus": ("list", "The employee's marital status ('Single' or 'Married')"),
-            "middleName": ("text", "The employee's middle name"),
-            "mobilePhone": ("phone", "The employee's mobile phone number"),
-            "nickname": ("text", "The employee's nickname"),
-            "payChangeReason": ("list", "The reason for the employee's last pay rate change."),
-            "payGroup": ("list", "The custom pay group that the employee belongs to."),
-            "payGroupId": ("integer", "The id value corresponding to the pay group that an employee belongs to"),
-            "payRate": ("currency", "The employee's CURRENT pay rate. ie: $8.25"),
-            "payRateEffectiveDate": ("date", "The date most recent change was made."),
-            "payType": ("pay_type", "The employee's CURRENT pay type. ie: 'hourly','salary','commission','exception hourly','monthly','piece rate','contract','daily'"),
-            "preferredName": ("text", "The employee's preferred name."),
-            "ssn": ("ssn", "The employee's social security number"),
-            "sin": ("sin", "The employee's Canadian Social Insurance Number"),
-            "state": ("state", "The employee's state/province"),
-            "stateCode": ("text", "The 2 character abbreviation for the employee's state (US only). Not editable."),
-            "status": ("status", "'status' indicates whether you are using BambooHR to track data about this employee. Valid values are 'Active', 'Inactive'."),
-            "supervisor": ("employee", "The emloyee’s CURRENT supervisor. Not editable."),
-            "supervisorId": ("integer", "The 'employeeNumber' of the employee's CURRENT supervisor. Not editable."),
-            "supervisorEId": ("integer", "The 'id' of the employee's CURRENT supervisor. Not editable."),
-            "terminationDate": ("date", "The date the employee was terminated"),
-            "workEmail": ("email", "The employee's work email address"),
-            "workPhone": ("phone", "The employee's work phone number, without extension"),
-            "workPhonePlusExtension": ("text", "The employee's work phone and extension. Not editable."),
-            "workPhoneExtension": ("text", "The employees work phone extension (if any)"),
-            "zipcode": ("text", "The employee's zipcode"),
-            "photoUploaded": ("bool", "The employee has uploaded a photo"),
-            "isPhotoUploaded": ("bool", "The employee has uploaded a photo"),
-            "rehireDate": ("date", "The date the employee was rehired"),
-            "adpCompanyCode": ("list", ""),
-            "adpFileNumber": ("text", ""),
-            "standardHoursPerWeek": ("integer", ""),
-            "earningsDate": ("date", ""),
-            "earningsPriorYear": ("currency", ""),
-            "bonusDate": ("date", ""),
-            "bonusAmount": ("currency", ""),
-            "bonusReason": ("list", ""),
-            "bonusComment": ("text", ""),
-            "commisionDate": ("date", ""),
-            "commissionAmount": ("currency", ""),
-            "commissionComment": ("text", ""),
-            "commissionComment": ("text", ""),
-            "benefitClassDate": ("date", ""),
-            "benefitClassClass": ("list", ""),
-            "benefitClassChangeReason": ("list", ""),
+            "acaStatusCategory": [
+                "text",
+                "The employee's ACA (Affordable Care Act) status. This field can not be updated directly but is calculated based on mappings for employment statuses found on the employmentStatus table. Options are: contractor, full-time, intern-eligible, intern-ineligible, part-time-eligible, part-time-ineligible, and seasonal."
+            ],
+            "address1": [
+                "text",
+                "The employee's first address line."
+            ],
+            "address2": [
+                "text",
+                "The employee's second address line."
+            ],
+            "age": [
+                "integer",
+                "The employee's age. To change age, update dateOfBirth field."
+            ],
+            "bestEmail": [
+                "email",
+                "The employee's work email if set, otherwise their home email."
+            ],
+            "birthday": [
+                "text",
+                "The employee's month and day of birth. To change birthday, update dateOfBirth field."
+            ],
+            "bonusAmount": [
+                "currency",
+                "The amount of the most recent bonus."
+            ],
+            "bonusComment": [
+                "text",
+                "Comment about the most recent bonus."
+            ],
+            "bonusDate": [
+                "date",
+                "The date of the last bonus."
+            ],
+            "bonusReason": [
+                "list",
+                "The reason for the most recent bonus."
+            ],
+            "city": [
+                "text",
+                "The employee's city."
+            ],
+            "commisionDate": [
+                "date",
+                "This field name contains a typo, and exists for backwards compatibility."
+            ],
+            "commissionAmount": [
+                "currency",
+                "The amount of the most recent commission."
+            ],
+            "commissionComment": [
+                "text",
+                "Comment about the most recent commission."
+            ],
+            "commissionDate": [
+                "date",
+                "The date of the last commission."
+            ],
+            "country": [
+                "country",
+                "The employee's country."
+            ],
+            "createdByUserId": [
+                "integer",
+                "The id of the user who created the employee. Read only. May be null if employee was created before the release of this field."
+            ],
+            "dateOfBirth": [
+                "date",
+                "The date the employee was born."
+            ],
+            "department": [
+                "list",
+                "The employee's CURRENT department."
+            ],
+            "displayName": [
+                "text",
+                "The employee's name displayed in a format configured by the user. Read only."
+            ],
+            "division": [
+                "list",
+                "The employee's CURRENT division."
+            ],
+            "eeo": [
+                "list",
+                "The employee's EEO job category. These are defined by the U.S. Equal Employment Opportunity Commission."
+            ],
+            "employeeNumber": [
+                "text",
+                "Employee number (assigned by your company)."
+            ],
+            "employmentHistoryStatus": [
+                "list",
+                "The employee's CURRENT employment status. Options are customized by account. Read-only starting with version 1.1; update using the employmentStatus table."
+            ],
+            "ethnicity": [
+                "list",
+                "The employee's ethnicity."
+            ],
+            "exempt": [
+                "list",
+                "The FLSA Overtime Status (Exempt or Non-exempt)."
+            ],
+            "firstName": [
+                "text",
+                "The employee's first name."
+            ],
+            "fullName1": [
+                "text",
+                "The employee's first and last name. (e.g., John Doe). Read only."
+            ],
+            "fullName2": [
+                "text",
+                "The employee's last and first name. (e.g., Doe, John). Read only."
+            ],
+            "fullName3": [
+                "text",
+                "The employee's full name and their preferred name. (e.g., Doe, John Quentin (JDog)). Read only."
+            ],
+            "fullName4": [
+                "text",
+                "The employee's full name without their preferred name, last name first. (e.g., Doe, John Quentin). Read only."
+            ],
+            "fullName5": [
+                "text",
+                "The employee's full name without their preferred name, first name first. (e.g., John Quentin Doe). Read only."
+            ],
+            "gender": [
+                "gender",
+                "The employee's gender (Male or Female)."
+            ],
+            "hireDate": [
+                "date",
+                "The date the employee was hired."
+            ],
+            "homeEmail": [
+                "email",
+                "The employee's home email address."
+            ],
+            "homePhone": [
+                "phone",
+                "The employee's home phone number."
+            ],
+            "id": [
+                "integer",
+                "The employee ID automatically assigned by BambooHR. Read only."
+            ],
+            "includeInPayroll": [
+                "bool",
+                "Should employee be included in payroll (Yes or No)"
+            ],
+            "isPhotoUploaded": [
+                "bool",
+                "Whether a photo has been uploaded for the employee. Read only."
+            ],
+            "jobTitle": [
+                "list",
+                "The CURRENT value of the employee's job title, updating this field will create a new row in position history."
+            ],
+            "lastChanged": [
+                "timestamp",
+                "The date and time that the employee record was last changed."
+            ],
+            "lastName": [
+                "text",
+                "The employee's last name."
+            ],
+            "location": [
+                "list",
+                "The employee's CURRENT location."
+            ],
+            "maritalStatus": [
+                "list",
+                "The employee's marital status (Single, Married, or Domestic Partnership)."
+            ],
+            "middleName": [
+                "text",
+                "The employee's middle name."
+            ],
+            "mobilePhone": [
+                "phone",
+                "The employee's mobile phone number."
+            ],
+            "nationalId": [
+                "national_id",
+                "The employee's National ID number"
+            ],
+            "nationality": [
+                "list",
+                "The employee's nationality"
+            ],
+            "nin": [
+                "nin",
+                "The employee's NIN number"
+            ],
+            "originalHireDate": [
+                "date",
+                "The date the employee was originally hired. Available starting with version 1.1."
+            ],
+            "paidPer": [
+                "paid_per",
+                "The employee's CURRENT pay per. ie: \"Hour\", \"Day\", \"Week\", \"Month\", \"Quarter\", \"Year\"."
+            ],
+            "payChangeReason": [
+                "list",
+                "The reason for the employee's last pay rate change."
+            ],
+            "payFrequency": [
+                "list",
+                "The employee's CURRENT pay frequency. ie: \"Weekly\", \"Every other week\", \"Twice a month\", \"Monthly\", \"Quarterly\", \"Twice a year\", or \"Yearly\""
+            ],
+            "payGroup": [
+                "list",
+                "The custom pay group that the employee belongs to."
+            ],
+            "payGroupId": [
+                "integer",
+                "The ID value corresponding to the pay group that an employee belongs to."
+            ],
+            "payRate": [
+                "currency",
+                "The employee's CURRENT pay rate (e.g., $8.25)."
+            ],
+            "payRateEffectiveDate": [
+                "date",
+                "The day the most recent change was made."
+            ],
+            "paySchedule": [
+                "list",
+                "The employee's CURRENT pay schedule."
+            ],
+            "payScheduleId": [
+                "integer",
+                "The ID value corresponding to the pay schedule that an employee belongs to."
+            ],
+            "payType": [
+                "pay_type",
+                "The employee's CURRENT pay type. ie: \"hourly\",\"salary\",\"commission\",\"exception hourly\",\"monthly\",\"weekly\",\"piece rate\",\"contract\",\"daily\",\"pro rata\"."
+            ],
+            "preferredName": [
+                "text",
+                "The employee's preferred name."
+            ],
+            "sin": [
+                "sin",
+                "The employee's Canadian Social Insurance Number."
+            ],
+            "ssn": [
+                "ssn",
+                "The employee's Social Security number."
+            ],
+            "standardHoursPerWeek": [
+                "integer",
+                "The number of hours the employee works in a standard week."
+            ],
+            "state": [
+                "state",
+                "The employee's state/province."
+            ],
+            "stateCode": [
+                "text",
+                "The 2 character abbreviation for the employee's state (US only). Read only."
+            ],
+            "status": [
+                "status",
+                "The employee's employee status (Active or Inactive)."
+            ],
+            "supervisor": [
+                "employee",
+                "The employee\u2019s CURRENT supervisor. Read only."
+            ],
+            "supervisorEId": [
+                "integer",
+                "The ID of the employee's CURRENT supervisor. Read only."
+            ],
+            "supervisorEmail": [
+                "text",
+                "The email of the employee's CURRENT supervisor. Read only."
+            ],
+            "supervisorId": [
+                "integer",
+                "The 'employeeNumber' of the employee's CURRENT supervisor. Read only."
+            ],
+            "terminationDate": [
+                "date",
+                "The date the employee was terminated. Read-only starting with version 1.1; update using the employmentStatus table."
+            ],
+            "timeTrackingEnabled": [
+                "bool",
+                "Should time tracking be enabled for the employee (Yes or No)"
+            ],
+            "workEmail": [
+                "email",
+                "The employee's work email address."
+            ],
+            "workPhone": [
+                "phone",
+                "The employee's work phone number, without extension."
+            ],
+            "workPhoneExtension": [
+                "text",
+                "The employee's work phone extension (if any)."
+            ],
+            "workPhonePlusExtension": [
+                "text",
+                "The employee's work phone and extension. Read only"
+            ],
+            "zipcode": [
+                "text",
+                "The employee's ZIP code."
+            ]
         }
 
         # dicctionary with employees data
